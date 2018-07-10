@@ -60,6 +60,23 @@ function onEachFeature(feature, AMIlayer) {
     });
 }
 
+var IncomeInfo = L.control();
+
+IncomeInfo.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info');
+    this.update();
+    return this._div;
+};
+
+// method that we will use to update the control based on feature properties passed
+IncomeInfo.update = function (props) {
+    this._div.innerHTML = '<h4>Census Tract Median Income</h4>' +  (props ?
+        '<b>' + props.CTLabel + '</b><br />' + props.ACS_Medi_3+ ' $ / mi<sup>2</sup>'
+        : 'Hover over a census tract');
+};
+
+IncomeInfo.addTo(mymap);
+
 var AMIData = L.geoJSON (CD22AMI, {
   style: style,
   onEachFeature: onEachFeature
