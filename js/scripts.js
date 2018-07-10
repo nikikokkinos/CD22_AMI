@@ -5,6 +5,8 @@ L.tileLayer('https://b.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.pn
 	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(mymap);
 
+console.log(AMIData);
+
 function getColor(i) {
   return i > 80000 ? '#1ad861' :
       i > 70000  ? '#59db8a' :
@@ -27,8 +29,40 @@ function style(feature) {
   };
 }
 
+function highlightFeature(e) {
+    var AMIlayer = e.target;
+
+    AMIlayer.setStyle({
+        weight: 5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        AMIlayer.bringToFront();
+    }
+}
+
+function resetHighlight(e) {
+    AMIlayer.resetStyle(e.target);
+}
+
+// function zoomToFeature(e) {
+//     map.fitBounds(e.target.getBounds());
+// }
+
+function onEachFeature(feature, AMIlayer) {
+    AMIlayer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        // click: zoomToFeature
+    });
+}
+
 var AMIData = L.geoJSON (CD22AMI, {
   style: style,
+  onEachFeature: onEachFeature
 }).addTo(mymap);
 
 var CD22Boundary = L.geoJSON (CD22, {
