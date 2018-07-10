@@ -42,10 +42,13 @@ function highlightFeature(e) {
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         AMIlayer.bringToFront();
     }
+
+    IncomeInfo.update(AMIlayer.feature.properties);
 }
 
 function resetHighlight(e) {
     AMIlayer.resetStyle(e.target);
+    IncomeInfo.update();
 }
 
 // function zoomToFeature(e) {
@@ -70,8 +73,8 @@ IncomeInfo.onAdd = function (map) {
 
 // method that we will use to update the control based on feature properties passed
 IncomeInfo.update = function (props) {
-    this._div.innerHTML = '<h4>Census Tract Median Income</h4>' +  (props ?
-        '<b>' + props.CTLabel + '</b><br />' + props.ACS_Medi_3+ ' $ / mi<sup>2</sup>'
+    this._div.innerHTML = '<h4>Council District 22 Census Tract Median Income</h4>' +  (props ?
+        '<b>' + 'Tract' + '&nbsp' + props.CTLabel + '</b><br />' + '$' + props.ACS_Medi_3
         : 'Hover over a census tract');
 };
 
