@@ -5,8 +5,7 @@ L.tileLayer('https://b.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.pn
 	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(mymap);
 
-console.log(AMIData);
-
+// Function to show colors based on income data on AMIlayer
 function getColor(i) {
   return i > 80000 ? '#1ad861' :
       i > 70000  ? '#59db8a' :
@@ -29,6 +28,7 @@ function style(feature) {
   };
 }
 
+// Creating function to highlight census tract on mouse hover
 function highlightFeature(e) {
     var AMIlayer = e.target;
 
@@ -46,9 +46,11 @@ function highlightFeature(e) {
     IncomeInfo.update(AMIlayer.feature.properties);
 }
 
+// Creating function to unhighlight when mouse unhovers
 function resetHighlight(e) {
-    AMIlayer.resetStyle(e.target);
+    // AMIlayer.resetStyle(e.target);
     IncomeInfo.update();
+    AMIlayer.bringToBack();
 }
 
 // function zoomToFeature(e) {
@@ -80,7 +82,7 @@ IncomeInfo.update = function (props) {
 
 IncomeInfo.addTo(mymap);
 
-var AMIData = L.geoJSON (CD22AMI, {
+var AMIlayer = L.geoJSON (CD22AMI, {
   style: style,
   onEachFeature: onEachFeature
 }).addTo(mymap);
