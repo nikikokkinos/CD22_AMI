@@ -84,46 +84,47 @@ IncomeInfo.update = function (props) {
 
 IncomeInfo.addTo(mymap);
 
-// Creation of median income level
-// var IncomeLegend = L.control({position: 'bottomright'});
+// Creation of median income level legend
+
+var IncomeLegend = L.control({position: 'bottomright'});
+
+IncomeLegend.onAdd = function (map) {
+
+    var IncomeLegendDiv = L.DomUtil.create('div', 'info legend'),
+        grades = [20000, 30000, 40000, 50000, 60000, 70000, 80000],
+        labels = [];
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        IncomeLegendDiv.innerHTML +=
+            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+
+    return IncomeLegendDiv;
+};
+
+IncomeLegend.addTo(mymap);
+
+// var legend = L.control({position: 'bottomright'});
 //
-// IncomeLegend.onAdd = function (map) {
+// legend.onAdd = function (map) {
 //
-//     var IncomeLegendDiv = L.DomUtil.create('div', 'info legend'),
+//     var div = L.DomUtil.create('div', 'info legend'),
 //         grades = [0, 20000, 30000, 40000, 50000, 60000, 70000, 80000],
 //         labels = [];
 //
 //     // loop through our density intervals and generate a label with a colored square for each interval
 //     for (var i = 0; i < grades.length; i++) {
-//         IncomeLegendDiv.innerHTML +=
+//         div.innerHTML +=
 //             '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
 //             grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
 //     }
 //
-//     return IncomeLegendDiv;
+//     return div;
 // };
 //
-// IncomeLegend.addTo(mymap);
-
-var legend = L.control({position: 'bottomright'});
-
-legend.onAdd = function (map) {
-
-    var div = L.DomUtil.create('div', 'info legend'),
-        grades = [0, 20000, 30000, 40000, 50000, 60000, 70000, 80000],
-        labels = [];
-
-    // loop through our density intervals and generate a label with a colored square for each interval
-    for (var i = 0; i < grades.length; i++) {
-        div.innerHTML +=
-            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-    }
-
-    return div;
-};
-
-legend.addTo(mymap);
+// legend.addTo(mymap);
 
 // Adding of geojson layers to map
 var AMIlayer = L.geoJSON (CD22AMI, {
