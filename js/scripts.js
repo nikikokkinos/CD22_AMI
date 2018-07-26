@@ -84,6 +84,22 @@ IncomeInfo.update = function (props) {
 
 IncomeInfo.addTo(mymap);
 
+//  Creation of Council District 22 AMI Info div
+
+// var CD22AMIdiv = L.control();
+//
+// CD22AMIdiv.onAdd = function (cd22ami) {
+//   this._div = L.DomUtil.create('div', 'CD22AMIinfo');
+//   this.update();
+//   return this._div;
+// };
+//
+// CD22AMIdiv.update = function (ami) {
+//   this._div.innerHTML = '<h2>Council District 22 Median Income</h2>' + Math.median(ami.ACS_Medi_3);)
+// };
+//
+// CD22AMIdiv.addTo(mymap);
+
 // Creation of median income level legend
 
 var IncomeLegend = L.control({position: 'bottomright'});
@@ -105,26 +121,6 @@ IncomeLegend.onAdd = function (map) {
 };
 
 IncomeLegend.addTo(mymap);
-
-// var legend = L.control({position: 'bottomright'});
-//
-// legend.onAdd = function (map) {
-//
-//     var div = L.DomUtil.create('div', 'info legend'),
-//         grades = [0, 20000, 30000, 40000, 50000, 60000, 70000, 80000],
-//         labels = [];
-//
-//     // loop through our density intervals and generate a label with a colored square for each interval
-//     for (var i = 0; i < grades.length; i++) {
-//         div.innerHTML +=
-//             '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-//             grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-//     }
-//
-//     return div;
-// };
-//
-// legend.addTo(mymap);
 
 // Adding of geojson layers to map
 var AMIlayer = L.geoJSON (CD22AMI, {
